@@ -14,9 +14,16 @@ CREATE TABLE IF NOT EXISTS clinica(
     telefone BIGINT(11)
 );
 
-CREATE TABLE IF NOT EXISTS candidatos_emprego(
+CREATE TABLE IF NOT EXISTS candidatos_emprego (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    curriculo VARCHAR(250) NOT NULL
+    nome VARCHAR(100) NOT NULL,
+    cpf BIGINT NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL,
+    telefone VARCHAR(20),
+    cargo_pretendido VARCHAR(100),
+    curriculo_path VARCHAR(250), -- caminho do arquivo
+    data_envio DATE DEFAULT CURRENT_DATE,
+    status_candidatura VARCHAR(50) DEFAULT 'Em análise'
 );
 
 CREATE TABLE IF NOT EXISTS beneficio(
