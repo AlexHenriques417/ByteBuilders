@@ -6,7 +6,7 @@ use clinica_db;
 
 --criacao das tabelas
 CREATE TABLE IF NOT EXISTS clinica(
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT, -- lucas tem medo de mulher
     nome VARCHAR(250) NOT NULL,
     cnpj BIGINT(14),
     endereco VARCHAR(250) NOT NULL,
