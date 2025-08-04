@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS candidatos_emprego (
     nome VARCHAR(100) NOT NULL,
     cpf BIGINT NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL,
-    telefone VARCHAR(20),
+    telefone BIGINT(11),
     cargo_pretendido VARCHAR(100),
     curriculo_path VARCHAR(250), -- caminho do arquivo
     data_envio DATE DEFAULT CURRENT_DATE,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
   data_nascimento DATE NOT NULL,
   data_admissao DATE NOT NULL,
   endereco VARCHAR(250),
-  telefone VARCHAR(20),
+  telefone BIGINT(11),
   email VARCHAR(150),
   salario DECIMAL(10,2),
   status ENUM('Ativo', 'Inativo') DEFAULT 'Ativo',
@@ -178,7 +178,9 @@ CREATE TABLE IF NOT EXISTS funcionario_pj(
   relatorio VARCHAR(250) NOT NULL,
   funcao VARCHAR(250) NOT NULL,
   nome VARCHAR(250) NOT NULL,
-  cnpj BIGINT(14)
+  cnpj BIGINT(14),
+  email VARCHAR(250) UNIQUE,
+  telefone BIGINT(11)
 );
 
 CREATE TABLE IF NOT EXISTS historico_salarial (
