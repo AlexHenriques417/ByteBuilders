@@ -5,13 +5,37 @@ CREATE DATABASE IF NOT EXISTS clinica_db;
 use clinica_db;
 
 --criacao das tabelas
+CREATE TABLE enderecos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    logradouro VARCHAR(255) NOT NULL,        -- Rua, Avenida, etc.
+    numero VARCHAR(20),                      -- Pode ter "S/N", letras, etc.
+    complemento VARCHAR(100),                -- Apto, bloco, sala, etc.
+    bairro VARCHAR(100),
+    cidade VARCHAR(100) NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    cep VARCHAR(20) NOT NULL,
+    pais VARCHAR(100) DEFAULT 'Brasil',      -- Permite internacionalização
+    criado_em DATETIME DEFAULT CURRENT_TIMESTAMP  --acho um pouco desnecessario o DATETIME ele so vai informar a hora e dia que vc fez mais sei la tu que sabe
+);
+
+CREATE TABLE telefones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    entidade_id INT NOT NULL,
+    tipo ENUM('celular', 'fixo', 'comercial', 'whatsapp', 'outro') DEFAULT 'celular',
+    numero VARCHAR(20) NOT NULL,
+    criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+);
+
+
 CREATE TABLE IF NOT EXISTS clinica(
     id INT PRIMARY KEY AUTO_INCREMENT, 
     nome VARCHAR(250) NOT NULL,
     cnpj BIGINT(14),
-    endereco VARCHAR(250) NOT NULL,
     email VARCHAR(250) NOT NULL,
-    telefone BIGINT(11)
+    endereco_id INT,
+    telefone_id INT,
+    FOREIGN KEY (endereco_id) REFERENCES enderecos(id),
+    FOREIGN KEY (telefone_id) REFERENCES telefones(id)
 );
 
 CREATE TABLE IF NOT EXISTS candidatos_emprego (
@@ -19,11 +43,12 @@ CREATE TABLE IF NOT EXISTS candidatos_emprego (
     nome VARCHAR(100) NOT NULL,
     cpf BIGINT NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL,
-    telefone BIGINT(11),
     cargo_pretendido VARCHAR(100),
     curriculo_path VARCHAR(250), -- caminho do arquivo
     data_envio DATE DEFAULT CURRENT_DATE,
-    status_candidatura VARCHAR(50) DEFAULT 'Em análise'
+    status_candidatura VARCHAR(50) DEFAULT 'Em análise',
+    telefone_id INT,
+    FOREIGN KEY (telefone_id) REFERENCES telefones(id)
 );
 
 CREATE TABLE IF NOT EXISTS beneficio(
@@ -56,22 +81,24 @@ CREATE TABLE IF NOT EXISTS funcionario_beneficiario(
 );
 
 CREATE TABLE IF NOT EXISTS funcionario (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  nome VARCHAR(250) NOT NULL,
-  estado_civil VARCHAR(50) NOT NULL,
-  cpf VARCHAR(14) NOT NULL UNIQUE,
-  sexo CHAR(1) NOT NULL,
-  data_nascimento DATE NOT NULL,
-  data_admissao DATE NOT NULL,
-  endereco VARCHAR(250),
-  telefone BIGINT(11),
-  email VARCHAR(150),
-  salario DECIMAL(10,2),
-  status ENUM('Ativo', 'Inativo') DEFAULT 'Ativo',
-  id_departamento INT,
-  id_cargo INT,
-  FOREIGN KEY (id_departamento) REFERENCES departamento(id),
-  FOREIGN KEY (id_cargo) REFERENCES cargo(id)
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(250) NOT NULL,
+    estado_civil VARCHAR(50) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    sexo CHAR(1) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    data_admissao DATE NOT NULL,
+    email VARCHAR(150),
+    salario DECIMAL(10,2),
+    status ENUM('Ativo', 'Inativo') DEFAULT 'Ativo',
+    id_departamento INT,
+    id_cargo INT,
+    endereco_id INT,
+    telefone_id INT,
+    FOREIGN KEY (telefone_id) REFERENCES telefones(id),
+    FOREIGN KEY (endereco_id) REFERENCES enderecos(id),
+    FOREIGN KEY (id_departamento) REFERENCES departamento(id),
+    FOREIGN KEY (id_cargo) REFERENCES cargo(id)
 );
 
 CREATE TABLE IF NOT EXISTS dependente(
@@ -180,7 +207,8 @@ CREATE TABLE IF NOT EXISTS funcionario_pj(
   nome VARCHAR(250) NOT NULL,
   cnpj BIGINT(14),
   email VARCHAR(250) UNIQUE,
-  telefone BIGINT(11)
+  telefone_id INT,
+  FOREIGN KEY (telefone_id) REFERENCES telefones(id)
 );
 
 CREATE TABLE IF NOT EXISTS historico_salarial (

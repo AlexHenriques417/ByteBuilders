@@ -1,0 +1,11 @@
+Sim, no mercado é comum usar tabelas separadas para telefone e endereço em bancos de dados relacionais, principalmente em sistemas mais estruturados e flexíveis.
+
+Vantagens desse modelo:
+
+Permite que uma entidade (ex: funcionário, clínica) tenha múltiplos telefones ou endereços.
+Facilita a normalização dos dados, evitando duplicidade.
+Torna o sistema mais escalável e adaptável para futuras necessidades (ex: internacionalização, tipos de telefone, endereços alternativos).
+Em sistemas menores ou mais simples, pode-se usar campos diretos na tabela principal, mas em projetos profissionais e sistemas corporativos, o padrão é separar em tabelas e usar chaves estrangeiras, como você fez.
+
+🧭Feitos:🧒
+    criação de endereço e telefones de maneira que é no mercado deixando o projeto profisional e objetivo.
