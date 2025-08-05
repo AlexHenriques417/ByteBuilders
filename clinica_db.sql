@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS funcionario (
     sexo CHAR(1) NOT NULL,
     data_nascimento DATE NOT NULL,
     data_admissao DATE NOT NULL,
-    email VARCHAR(150),
     salario DECIMAL(10,2),
     status ENUM('Ativo', 'Inativo') DEFAULT 'Ativo',
     id_departamento INT,
