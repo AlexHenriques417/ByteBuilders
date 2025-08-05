@@ -10,10 +10,6 @@ CREATE TABLE IF NOT EXISTS clinica(
     nome VARCHAR(250) NOT NULL,
     cnpj BIGINT(14),
     email VARCHAR(250) NOT NULL,
-    endereco_id INT,
-    telefone_id INT,
-    FOREIGN KEY (endereco_id) REFERENCES enderecos(id),
-    FOREIGN KEY (telefone_id) REFERENCES telefones(id)
 );
 
 CREATE TABLE IF NOT EXISTS candidatos_emprego (
@@ -31,6 +27,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(250) NOT NULL,
     estado_civil VARCHAR(50) NOT NULL,
+    nacionalidade VARCHAR(20) NOT NULL,
     cpf VARCHAR(14) NOT NULL UNIQUE,
     sexo CHAR(1) NOT NULL,
     data_nascimento DATE NOT NULL,
@@ -142,7 +139,6 @@ CREATE TABLE IF NOT EXISTS unidade(
     id_clinica INT,
     FOREIGN KEY (id_clinica) REFERENCES clinica(id)
 );
-
 
 CREATE TABLE IF NOT EXISTS administrador(
     id INT PRIMARY KEY AUTO_INCREMENT,
