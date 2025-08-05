@@ -41,6 +41,14 @@ CREATE TABLE IF NOT EXISTS funcionario (
     FOREIGN KEY (id_cargo) REFERENCES cargo(id)
 );
 
+CREATE TABLE IF NOT EXISTS funcionario_pj(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  relatorio VARCHAR(250) NOT NULL,
+  funcao VARCHAR(250) NOT NULL,
+  nome VARCHAR(250) NOT NULL,
+  cnpj BIGINT(14),
+);
+
 CREATE TABLE IF NOT EXISTS departamento(
     id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(250) NOT NULL,
@@ -81,8 +89,12 @@ CREATE TABLE IF NOT EXISTS endereco (
     cep CHAR(9) NOT NULL,
     id_funcionario INT,
     id_candidato INT,
+    id_pj INT,
+    id_clinica INT,
     FOREIGN KEY (id_funcionario) REFERENCES funcionario(id),
-    FOREIGN KEY (id_candidato) REFERENCES candidatos_emprego(id)
+    FOREIGN KEY (id_candidato) REFERENCES candidatos_emprego(id),
+    FOREIGN KEY (id_pj) REFERENCES funcionario_pj(id),
+    FOREIGN KEY (id_clinica) REFERENCES clinica(id)
 );
 
 CREATE TABLE IF NOT EXISTS contato (
@@ -91,8 +103,12 @@ CREATE TABLE IF NOT EXISTS contato (
     valor VARCHAR(150) NOT NULL,
     id_funcionario INT,
     id_candidato INT,
+    id_pj INT,
+    id_clinica INT,
     FOREIGN KEY (id_funcionario) REFERENCES funcionario(id),
-    FOREIGN KEY (id_candidato) REFERENCES candidatos_emprego(id)
+    FOREIGN KEY (id_candidato) REFERENCES candidatos_emprego(id),
+    FOREIGN KEY (id_pj) REFERENCES funcionario_pj(id),
+    FOREIGN KEY (id_clinica) REFERENCES clinica(id)
 );
 
 CREATE TABLE IF NOT EXISTS dependente(
@@ -191,17 +207,6 @@ CREATE TABLE IF NOT EXISTS funcionario_treinamento(
     id_treinamento INT,
     FOREIGN KEY (id_funcionario) REFERENCES funcionario(id),
     FOREIGN KEY (id_treinamento) REFERENCES treinamento(id)
-);
-
-CREATE TABLE IF NOT EXISTS funcionario_pj(
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  relatorio VARCHAR(250) NOT NULL,
-  funcao VARCHAR(250) NOT NULL,
-  nome VARCHAR(250) NOT NULL,
-  cnpj BIGINT(14),
-  email VARCHAR(250) UNIQUE,
-  telefone_id INT,
-  FOREIGN KEY (telefone_id) REFERENCES telefones(id)
 );
 
 CREATE TABLE IF NOT EXISTS historico_salarial (
