@@ -6,7 +6,7 @@ use clinica_db;
 
 --criacao das tabelas
 CREATE TABLE IF NOT EXISTS clinica(
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT, 
     nome VARCHAR(250) NOT NULL,
     cnpj BIGINT(14),
     endereco VARCHAR(250) NOT NULL,
@@ -14,9 +14,16 @@ CREATE TABLE IF NOT EXISTS clinica(
     telefone BIGINT(11)
 );
 
-CREATE TABLE IF NOT EXISTS candidatos_emprego(
+CREATE TABLE IF NOT EXISTS candidatos_emprego (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    curriculo VARCHAR(250) NOT NULL
+    nome VARCHAR(100) NOT NULL,
+    cpf BIGINT NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL,
+    telefone BIGINT(11),
+    cargo_pretendido VARCHAR(100),
+    curriculo_path VARCHAR(250), -- caminho do arquivo
+    data_envio DATE DEFAULT CURRENT_DATE,
+    status_candidatura VARCHAR(50) DEFAULT 'Em análise'
 );
 
 CREATE TABLE IF NOT EXISTS beneficio(
@@ -57,7 +64,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
   data_nascimento DATE NOT NULL,
   data_admissao DATE NOT NULL,
   endereco VARCHAR(250),
-  telefone VARCHAR(20),
+  telefone BIGINT(11),
   email VARCHAR(150),
   salario DECIMAL(10,2),
   status ENUM('Ativo', 'Inativo') DEFAULT 'Ativo',
@@ -171,7 +178,9 @@ CREATE TABLE IF NOT EXISTS funcionario_pj(
   relatorio VARCHAR(250) NOT NULL,
   funcao VARCHAR(250) NOT NULL,
   nome VARCHAR(250) NOT NULL,
-  cnpj BIGINT(14)
+  cnpj BIGINT(14),
+  email VARCHAR(250) UNIQUE,
+  telefone BIGINT(11)
 );
 
 CREATE TABLE IF NOT EXISTS historico_salarial (
