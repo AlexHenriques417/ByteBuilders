@@ -34,18 +34,20 @@ CREATE TABLE IF NOT EXISTS funcionario (
     data_admissao DATE NOT NULL,
     salario DECIMAL(10,2),
     status ENUM('Ativo', 'Inativo') DEFAULT 'Ativo',
+    senha_sistema VARCHAR(9) NOT NULL,
     id_departamento INT,
     id_cargo INT,
     FOREIGN KEY (id_departamento) REFERENCES departamento(id),
     FOREIGN KEY (id_cargo) REFERENCES cargo(id)
 );
 
-CREATE TABLE IF NOT EXISTS funcionario_pj(
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  relatorio VARCHAR(250) NOT NULL,
-  funcao VARCHAR(250) NOT NULL,
-  nome VARCHAR(250) NOT NULL,
-  cnpj BIGINT(14),
+CREATE TABLE IF NOT EXISTS funcionario_pj (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    relatorio VARCHAR(250) NOT NULL,
+    funcao VARCHAR(250) NOT NULL,
+    nome VARCHAR(250) NOT NULL,
+    cnpj CHAR(14) NOT NULL,
+    senha_sistema VARCHAR(9) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS departamento(
@@ -158,6 +160,7 @@ CREATE TABLE IF NOT EXISTS unidade(
 CREATE TABLE IF NOT EXISTS administrador(
     id INT PRIMARY KEY AUTO_INCREMENT,
     relatorio VARCHAR(250) NOT NULL,
+    senha_sistema VARCHAR(9) NOT NULL
     id_funcionario INT,
     FOREIGN KEY (id_funcionario) REFERENCES funcionario(id)
 );
