@@ -160,7 +160,6 @@ CREATE TABLE IF NOT EXISTS unidade(
 CREATE TABLE IF NOT EXISTS administrador(
     id INT PRIMARY KEY AUTO_INCREMENT,
     relatorio VARCHAR(250) NOT NULL,
-    senha_sistema VARCHAR(9) NOT NULL
     id_funcionario INT,
     FOREIGN KEY (id_funcionario) REFERENCES funcionario(id)
 );
