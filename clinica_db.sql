@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS clinica(
     id INT PRIMARY KEY AUTO_INCREMENT, 
     nome VARCHAR(250) NOT NULL,
     cnpj BIGINT(14),
-    email VARCHAR(250) NOT NULL,
 );
 
 CREATE TABLE IF NOT EXISTS candidatos_emprego (
